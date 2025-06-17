@@ -14,22 +14,38 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
-    console.log("📩 Mensaje recibido:", msg.body); 
-
     try {
-      const res = await axios.post("http://localhost:5001/predict", {
-        text: msg.body,
-        user: msg.from.split("@")[0], 
-      });
+        const text = msg.body;
+        const from = msg.from;
+        const sender = msg.author || msg.from; 
 
-      console.log("📤 Resultado del modelo:", res.data.resultado);
+        // Extraer número del usuario
+        const userNumber = (msg.author || msg.from).split('@')[0];
 
-      if (res.data.resultado === "Ofensivo" || res.data.resultado === "Racista" || res.data.resultado === "Odio") {
-        msg.reply("⚠️ Este mensaje puede contener lenguaje ofensivo según IA.");
-      }
+        // Detectar si es grupo
+        const isGroup = msg.from.endsWith('@g.us');
+        let groupName = null;
+
+        if (isGroup) {
+            const chat = await msg.getChat();
+            groupName = chat.name;
+        }
+
+        // Enviar al backend
+        const res = await axios.post('http://localhost:5001/predict', {
+            text,
+            user: userNumber,
+            group: groupName
+        });
+
+        if (res.data.resultado !== "Normal") {
+            msg.reply("⚠️ Este mensaje puede contener lenguaje ofensivo según IA.");
+        }
+
     } catch (err) {
-      console.error("❌ Error con el backend:", err.message);
+        console.error('❌ Error con el backend:', err.message);
     }
 });
+
 
 client.initialize();

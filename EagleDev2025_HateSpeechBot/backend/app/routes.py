@@ -20,6 +20,7 @@ def predict():
     data = request.get_json()
     text = data.get("text", "")
     user = data.get("user", "anonimo")
+    group = data.get("group", None)
 
     input_tensor = preprocess_text(text, tokenizer)
     prediction = model.predict(input_tensor)
@@ -28,11 +29,13 @@ def predict():
     pred_idx = prediction[0].argmax() if prediction.shape[1] > 1 else int(prediction[0][0] > 0.5)
     categoria = categorias[pred_idx]
 
+    # Solo guardar si no es "Normal"
     if categoria != "Normal":
         mensajes.insert_one({
             "usuario": user,
             "mensaje": text,
             "categoria": categoria,
+            "grupo": group,
             "fecha": datetime.now()
         })
 
