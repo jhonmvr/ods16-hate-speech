@@ -2,7 +2,7 @@ import re
 import string
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-MAXLEN = 100
+MAXLEN = 50
 
 def clean_text(text):
     text = text.lower()
@@ -10,7 +10,6 @@ def clean_text(text):
     return text
 
 def preprocess_text(text, tokenizer):
-    text = clean_text(text)
-    seq = tokenizer.texts_to_sequences([text])
-    padded = pad_sequences(seq, maxlen=MAXLEN)
+    sequence = tokenizer.texts_to_sequences([text.lower()])
+    padded = pad_sequences(sequence, maxlen=MAXLEN, padding='post')
     return padded

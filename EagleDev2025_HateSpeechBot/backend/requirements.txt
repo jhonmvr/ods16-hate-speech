@@ -1,7 +1,17 @@
+# Backend
 flask
 pymongo
-faster-whisper
-tensorflow
-ffmpeg-python
-pandas
+
+# Gemini (Google Generative AI)
+google-generativeai
+
+# Procesamiento de audio
 openai-whisper
+ffmpeg-python
+
+# IA / ML
+tensorflow
+
+# Utilidades
+pandas
+python-dotenv

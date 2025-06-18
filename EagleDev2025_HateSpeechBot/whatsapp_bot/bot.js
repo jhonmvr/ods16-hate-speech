@@ -16,11 +16,10 @@ client.on("ready", () => {
 });
 
 client.on("message", async (msg) => {
-  console.log("📩 Mensaje recibido:", msg.body || "[No es texto]");
+  console.log("📩 Mensaje recibido:", msg.body || "[Audio]");
   console.log("🔍 Tipo:", msg.type);
 
   try {
-    const from = msg.from;
     const sender = msg.author || msg.from;
     const userNumber = sender.split("@")[0];
     const isGroup = msg.from.endsWith("@g.us");
@@ -29,28 +28,31 @@ client.on("message", async (msg) => {
     if (isGroup) {
       const chat = await msg.getChat();
       groupName = chat.name;
-      console.log("👥 Grupo detectado:", groupName);
     }
 
-    // === Texto ===
+    // === TEXTO ===
     if (msg.type === "chat") {
       const text = msg.body;
-      const res = await axios.post("http://localhost:5001/predict", {
+
+      const response = await axios.post("http://localhost:5001/predict", {
         text,
         user: userNumber,
         group: groupName,
       });
 
-      console.log("🤖 Respuesta del modelo:", res.data);
+      const resultado = response.data.resultado;
+      const respuestaModerada = response.data.respuesta_moderada;
 
-      if (res.data.resultado !== "Normal") {
-        await msg.reply(
-          "⚠️ Este mensaje puede contener lenguaje ofensivo según IA."
-        );
+      if (resultado !== "Ninguno") {
+        const advertencia =
+          `⚠️ Este mensaje fue detectado como potencialmente ofensivo.\n` +
+          `🔍 *Clasificación:* ${resultado}\n\n` +
+          `💡 *Sugerencia alternativa:* ${respuestaModerada}`;
+        await msg.reply(advertencia);
       }
     }
 
-    // === Audio ===
+    // === AUDIO ===
     else if (msg.type === "audio" || msg.type === "ptt") {
       const media = await msg.downloadMedia();
       if (!media) return console.log("❌ No se pudo descargar el audio");
@@ -60,14 +62,14 @@ client.on("message", async (msg) => {
       const audioPath = path.join(__dirname, "audios", filename);
 
       fs.writeFileSync(audioPath, audioBuffer);
-      console.log("🎙️ Audio guardado en:", audioPath);
+      console.log("🎙️ Audio guardado:", audioPath);
 
       const formData = new FormData();
       formData.append("audio", fs.createReadStream(audioPath));
       formData.append("user", userNumber);
       formData.append("group", groupName || "");
 
-      const res = await axios.post(
+      const response = await axios.post(
         "http://localhost:5001/transcribe",
         formData,
         {
@@ -75,16 +77,21 @@ client.on("message", async (msg) => {
         }
       );
 
-      console.log("🧠 Transcripción recibida:", res.data);
+      fs.unlinkSync(audioPath);
 
-      if (res.data.resultado !== "Normal") {
-        await msg.reply("⚠️ El audio contiene lenguaje ofensivo según IA.");
+      const { resultado, respuesta_moderada } = response.data;
+
+      if (resultado !== "Ninguno") {
+        const advertencia =
+          `⚠️ Este audio fue detectado como potencialmente ofensivo.\n` +
+          `🔍 *Clasificación:* ${resultado}\n\n` +
+          `💡 *Sugerencia alternativa:* ${respuesta_moderada}`;
+        await msg.reply(advertencia);
       }
-
-      fs.unlinkSync(audioPath); // Limpieza
     }
   } catch (err) {
-    console.error("❌ Error en el procesamiento:", err.message);
+    console.error("❌ Error en procesamiento:", err.message);
+    await msg.reply("⚠️ Ocurrió un error al procesar tu mensaje.");
   }
 });
 

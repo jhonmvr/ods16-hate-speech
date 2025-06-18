@@ -1,19 +1,19 @@
 # Carga del modelo y tokenizer
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.text import tokenizer_from_json
-import json
+import pickle
+import os
+from keras.saving import load_model
 
-# Cargar modelo entrenado
-model = load_model("modelo.keras")
+# Rutas
+MODEL_PATH = "app/model/hate_speech_model.keras"
+TOKENIZER_PATH = "app/model/tokenizer.pickle"
 
-# Cargar tokenizer
-with open("tokenizer.json") as f:
-    tokenizer_json = f.read()  # lee como string
-    tokenizer = tokenizer_from_json(tokenizer_json) 
-
-# Exponer modelo y tokenizer
 def get_model():
-    return model
+    if not os.path.exists(MODEL_PATH):
+        raise FileNotFoundError(f"Modelo no encontrado: {MODEL_PATH}")
+    return load_model(MODEL_PATH)
 
 def get_tokenizer():
-    return tokenizer
+    if not os.path.exists(TOKENIZER_PATH):
+        raise FileNotFoundError(f"Tokenizer no encontrado: {TOKENIZER_PATH}")
+    with open(TOKENIZER_PATH, "rb") as handle:
+        return pickle.load(handle)
