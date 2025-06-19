@@ -2,7 +2,7 @@ from typing import Literal
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
-from app.model import get_model
+from app.model.model_loader import get_model
 
 # Configurar tu API KEY
 load_dotenv()

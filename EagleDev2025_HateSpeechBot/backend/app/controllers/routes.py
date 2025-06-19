@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from app.model import get_model, get_tokenizer
-from app.preprocess import preprocess_text
+from app.model.model_loader import get_model, get_tokenizer
+from app.services.preprocess import preprocess_text
 from pymongo import MongoClient
 from datetime import datetime
 import tempfile
@@ -9,7 +9,7 @@ import subprocess
 import traceback
 import os
 
-from app.gemini_service import translate_with_gemini, verificar, generar_respuesta_moderada
+from app.services.gemini_service import translate_with_gemini, verificar, generar_respuesta_moderada
 
 # === CONFIGURACIÓN ===
 app = Flask(__name__)
