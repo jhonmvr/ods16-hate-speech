@@ -15,7 +15,7 @@ from app.services.gemini_service import translate_with_gemini, verificar, genera
 app = Flask(__name__)
 model = get_model()
 tokenizer = get_tokenizer()
-model_whisper = whisper.load_model("base")
+model_whisper = whisper.load_model("large")
 
 # Conexión a MongoDB en el contenedor Docker
 client = MongoClient("mongodb://localhost:27017/")

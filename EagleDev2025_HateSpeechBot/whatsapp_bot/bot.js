@@ -16,8 +16,6 @@ client.on("ready", () => {
 });
 
 client.on("message", async (msg) => {
-  console.log("📩 Mensaje recibido:", msg.body || "[Audio]");
-  console.log("🔍 Tipo:", msg.type);
 
   try {
     const sender = msg.author || msg.from;
@@ -30,6 +28,11 @@ client.on("message", async (msg) => {
       groupName = chat.name;
     }
 
+    if(groupName != 'EagleDev'){
+      return
+    }
+    console.log("📩 Mensaje recibido:", msg.body || "[Audio]");
+    console.log("🔍 Tipo:", msg.type);
     // === TEXTO ===
     if (msg.type === "chat") {
       const text = msg.body;
@@ -49,6 +52,7 @@ client.on("message", async (msg) => {
           `🔍 *Clasificación:* ${resultado}\n\n` +
           `💡 *Sugerencia alternativa:* ${respuestaModerada}`;
         await msg.reply(advertencia);
+        await msg.delete(true); 
       }
     }
 
@@ -87,6 +91,7 @@ client.on("message", async (msg) => {
           `🔍 *Clasificación:* ${resultado}\n\n` +
           `💡 *Sugerencia alternativa:* ${respuesta_moderada}`;
         await msg.reply(advertencia);
+        await msg.delete(true); 
       }
     }
   } catch (err) {
