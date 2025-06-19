@@ -43,10 +43,7 @@ def predict():
 
     # Ejecutar modelo
     input_tensor = preprocess_text(text_en, tokenizer)
-    _ = model.predict(input_tensor)
-
-    # Verificar
-    es_ofensivo = verificar(text)
+    es_ofensivo = verificar(text,input_tensor)
     if not es_ofensivo:
         return jsonify({"resultado": "Ninguno"})
 
@@ -91,7 +88,7 @@ def transcribe():
         wav_path = ogg_path.replace(".ogg", ".wav")
         subprocess.run(["ffmpeg", "-i", ogg_path, wav_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-        result = model_whisper.transcribe(wav_path, language="es", task="translate")
+        result = model_whisper.transcribe(wav_path, language="es")
         texto = result.get("text", "").strip()
         print(f"📝 Texto transcrito: {texto}")
 
@@ -114,10 +111,7 @@ def transcribe():
 
     # Ejecutar el modelo 
     input_tensor = preprocess_text(texto, tokenizer)
-    _ = model.predict(input_tensor)
-
-    # Verificar
-    es_ofensivo = verificar(texto)
+    es_ofensivo = verificar(texto,input_tensor)
     if not es_ofensivo:
         return jsonify({"resultado": "Ninguno"})
 

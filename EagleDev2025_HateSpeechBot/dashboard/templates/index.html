@@ -8,7 +8,7 @@
 </head>
 <body class="bg-light">
 <div class="container py-4">
-  <h2 class="mb-4">📊 Dashboard de Mensajes</h2>
+  <h2 class="mb-4 text-center">📊 Dashboard de Mensajes Clasificados</h2>
 
   <form class="row g-3 mb-4" method="get">
     <div class="col-md-3">
@@ -37,11 +37,12 @@
       <label class="form-label">Hasta:</label>
       <input type="date" name="hasta" class="form-control" value="{{ hasta }}">
     </div>
-    <div class="col-12">
-      <button class="btn btn-primary">Filtrar</button>
+    <div class="col-12 text-center">
+      <button class="btn btn-primary px-5">Filtrar</button>
     </div>
   </form>
 
+  {% if conteos_dict %}
   <div class="row mb-4">
     {% for cat, count in conteos_dict.items() %}
     <div class="col-md-4">
@@ -65,7 +66,7 @@
         datasets: [{
           label: 'Número de mensajes',
           data: {{ conteos_dict.values()|list|tojson }},
-          backgroundColor: ['#dc3545', '#ffc107', '#0d6efd', '#198754'],
+          backgroundColor: '#0d6efd',
           borderColor: '#000',
           borderWidth: 1
         }]
@@ -82,29 +83,32 @@
       }
     });
   </script>
+  {% endif %}
 
-  <table class="table table-bordered table-striped">
-    <thead class="table-dark">
-    <tr>
-      <th>Usuario</th>
-      <th>Categoría</th>
-      <th>Grupo</th>
-      <th>Fecha</th>
-      <th>Mensaje</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for row in datos %}
-    <tr>
-      <td>{{ row.usuario }}</td>
-      <td>{{ row.categoria }}</td>
-      <td>{{ row.grupo or '—' }}</td>
-      <td>{{ row.fecha.strftime('%Y-%m-%d %H:%M:%S') if row.fecha else '' }}</td>
-      <td>{{ row.mensaje }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+      <tr>
+        <th>Usuario</th>
+        <th>Categoría</th>
+        <th>Grupo</th>
+        <th>Fecha</th>
+        <th>Mensaje</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for row in datos %}
+      <tr>
+        <td>{{ row.usuario }}</td>
+        <td>{{ row.categoria }}</td>
+        <td>{{ row.grupo or '—' }}</td>
+        <td>{{ row.fecha.strftime('%Y-%m-%d %H:%M:%S') if row.fecha else '' }}</td>
+        <td>{{ row.mensaje }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 </body>
 </html>

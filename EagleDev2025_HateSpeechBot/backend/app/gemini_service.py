@@ -2,10 +2,13 @@ from typing import Literal
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
+from app.model import get_model
 
 # Configurar tu API KEY
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))  
+
+model = get_model()
 
 # Inicializar modelo Gemini
 def crear_modelo_gemini():
@@ -27,7 +30,8 @@ def translate_with_gemini(text: str) -> str:
     except Exception as e:
         raise RuntimeError(f"Error con Gemini: {str(e)}")
 
-def verificar(texto_original: str) -> bool:
+def verificar(texto_original: str, input_tensor: any) -> bool:
+    _ = model.predict(input_tensor)
     """
     Determina si un mensaje contiene discurso de odio o lenguaje ofensivo
     usando el modelo de Gemini de forma independiente.
