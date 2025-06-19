@@ -42,9 +42,15 @@ if __name__ == "__main__":
 
     # Puedes cambiar estos textos de prueba
     sample_inputs = [
+        "i love u so much",
+        "mijin",
+        "gordo por que te portas como la verga",
+        "I hate you",
+        "You are a terrible person",
         "You are the worst and you should disappear",
         "What a lovely day for a walk in the park",
-        "Nobody cares what you think, idiot"
+        "Nobody cares what you think, idiot",
+        "== Hello... ==  ASP.NET is not a language.. its a .NET technology which enables server side programming for web development.. Infact ASP.NET should not be under the catagory ``.NET programming languages``...  Nawin"
     ]
 
     predict_text(sample_inputs)
