@@ -8,7 +8,7 @@ A continuación se presentan las gráficas obtenidas durante el entrenamiento de
 
 Esta gráfica muestra cómo mejoró la **precisión** del modelo en cada época, tanto para entrenamiento como validación:
 
-![Train vs Val Accuracy](accuracy_plot.png)
+![Train vs Val Accuracy](resultados/accuracy_plot.png)
 
 ---
 
@@ -16,7 +16,7 @@ Esta gráfica muestra cómo mejoró la **precisión** del modelo en cada época,
 
 Aquí se visualiza la **pérdida (loss)** en ambas fases. Una pérdida más baja indica mejor aprendizaje:
 
-![Train vs Val Loss](loss_plot.png)
+![Train vs Val Loss](resultados/loss_plot.png)
 
 ---
 
@@ -32,19 +32,19 @@ Se registraron métricas del sistema para monitorear el consumo durante el entre
 
 ### RAM
 
-![RAM Usage](ram_usage.png)
+![RAM Usage](resultados/ram_usage.png)
 
 ---
 
 ### GPU
 
-![GPU Usage](gpu_usage.png)
+![GPU Usage](resultados/gpu_usage.png)
 
 ---
 
 ### Memoria de GPU
 
-![GPU Memory Usage](gpu_memory_usage.png)
+![GPU Memory Usage](resultados/gpu_memory_usage.png)
 
 ---
 
@@ -52,7 +52,7 @@ Se registraron métricas del sistema para monitorear el consumo durante el entre
 
 Cada época del entrenamiento tomó aproximadamente entre 1 y 2 segundos:
 
-![Epoch Time](epoch_time_plot.png)
+![Epoch Time](resultados/epoch_time_plot.png)
 
 ---
 
