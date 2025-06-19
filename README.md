@@ -1,28 +1,28 @@
-# ğŸ“Š Resultados del Entrenamiento del Modelo de ClasificaciÃ³n de Hate Speech
+# ?? Resultados del Entrenamiento del Modelo de Clasificación de Hate Speech
 
-A continuaciÃ³n se presentan las grÃ¡ficas obtenidas durante el entrenamiento del modelo de clasificaciÃ³n, que detecta mensajes ofensivos, de odio o neutros.
+A continuación se presentan las gráficas obtenidas durante el entrenamiento del modelo de clasificación, que detecta mensajes ofensivos, de odio o neutros.
 
 ---
 
-## ğŸ¯ PrecisiÃ³n de ClasificaciÃ³n
+## ?? Precisión de Clasificación
 
-Esta grÃ¡fica muestra cÃ³mo mejorÃ³ la **precisiÃ³n** del modelo en cada Ã©poca, tanto para entrenamiento como validaciÃ³n:
+Esta gráfica muestra cómo mejoró la **precisión** del modelo en cada época, tanto para entrenamiento como validación:
 
 ![Train vs Val Accuracy](resultados/accuracy_plot.png)
 
 ---
 
-## ğŸ“‰ PÃ©rdida Total
+## ?? Pérdida Total
 
-AquÃ­ se visualiza la **pÃ©rdida (loss)** en ambas fases. Una pÃ©rdida mÃ¡s baja indica mejor aprendizaje:
+Aquí se visualiza la **pérdida (loss)** en ambas fases. Una pérdida más baja indica mejor aprendizaje:
 
 ![Train vs Val Loss](resultados/loss_plot.png)
 
 ---
 
-## ğŸ–¥ï¸ Uso de Recursos del Sistema
+## ??? Uso de Recursos del Sistema
 
-Se registraron mÃ©tricas del sistema para monitorear el consumo durante el entrenamiento:
+Se registraron métricas del sistema para monitorear el consumo durante el entrenamiento:
 
 ### CPU
 
@@ -48,16 +48,16 @@ Se registraron mÃ©tricas del sistema para monitorear el consumo durante el entre
 
 ---
 
-## â±ï¸ DuraciÃ³n por Ã‰poca
+## ?? Duración por Época
 
-Cada Ã©poca del entrenamiento tomÃ³ aproximadamente entre 1 y 2 segundos:
+Cada época del entrenamiento tomó aproximadamente entre 1 y 2 segundos:
 
 ![Epoch Time](resultados/epoch_time_plot.png)
 
 ---
 
-## âœ… Conclusiones
+## ? Conclusiones
 
 - El modelo muestra una mejora progresiva sin signos de sobreajuste.
 - El uso de recursos fue estable y eficiente.
-- Puede ejecutarse en equipos con recursos moderados (CPU y GPU bÃ¡sica).
+- Puede ejecutarse en equipos con recursos moderados (CPU y GPU básica).
